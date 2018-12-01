@@ -10,10 +10,9 @@
 <div class="row">
     <div class="col-md-6">
         <h2>Find an Event</h2>
-        <p>Search By Event | search by location | search</p>
+        @Html.Partial("~/Views/Home/_SearchEvents.cshtml")
     </div>
     <div class="col-md-6">
-        <h2>add button to see last minut deals</h2>
         <div id="LastMinuteDeals">
             @Ajax.ActionLink("Click to see Last Minute Deals",
                 "LastMinuteDeals",
@@ -32,5 +31,5 @@
 @section Scripts
 {
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-
+    <script src="~/Scripts/Apps/EventScript.js"></script>
 }

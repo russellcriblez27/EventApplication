@@ -1,0 +1,46 @@
+﻿@model EventApplication.Models.Event
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+<div>
+    <p>Sale ends on @Html.DisplayTextFor(model => model.StartDate)</p>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayTextFor(model => model.Title)<br />
+            FREE
+        </div>
+        <div class="col-md-2">
+            Number of Tickets<br />
+            <select name="ticketQuantity">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        @if (Request.IsAuthenticated)
+        {
+            <p class="button">
+                @Html.ActionLink("Checkout", "AddOrder",
+                             "Order",
+                             new { id = Model.EventId, quantity = ticketQuantity. },
+                             "")
+            </p>
+        }
+        else
+        {
+
+        }
+    </div>
+</div>

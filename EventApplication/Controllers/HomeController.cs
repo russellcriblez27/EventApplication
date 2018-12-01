@@ -19,7 +19,7 @@ namespace EventApplication.Controllers
             return View();
         }
 
-        private ActionResult LastMinuteDeals()
+        public ActionResult LastMinuteDeals()
         {
             var events = GetLastMinuteDeals();
             return PartialView("LastMinuteDeals", events);
@@ -27,10 +27,52 @@ namespace EventApplication.Controllers
 
         private List<Event> GetLastMinuteDeals()
         {
-            List<Event> events = db.Events.Where(a => a.StartDate.Date == System.DateTime.Now.Date ||
-                                                      a.StartDate.Date == System.DateTime.Now.Date.AddDays(1) ||
-                                                      a.StartDate.Date == System.DateTime.Now.Date.AddDays(2)).ToList();
+            DateTime now = System.DateTime.Now;
+            DateTime tomorrow = System.DateTime.Now.AddDays(1);
+            DateTime last = System.DateTime.Now.AddDays(2);
+            List<Event> events = db.Events.Where(a => a.StartDate == now ||
+                                                      a.StartDate == tomorrow ||
+                                                      a.StartDate == last).ToList();
             return events;
+        }
+
+        public ActionResult FindAnEvent()
+        {
+            return View();
+        }
+
+        public ActionResult _SearchEvents()
+        {
+            return PartialView();
+        }
+
+        public ActionResult _SearchEventsResults(string EventOrType, string Location)
+        {
+
+            if (EventOrType.Length > 2)
+            {
+                //search by event or event type
+                var getEvents = GetEventSearch(EventOrType);
+                return PartialView(getEvents);
+            }
+            else if (Location.Length > 2)
+            {
+                //search by location
+                var getEvents = GetLocationSearch(Location);
+                return PartialView(getEvents);
+
+            }
+            else return null;
+        }
+
+        private List<Event> GetEventSearch(string s)
+        {
+            return db.Events.Where(e => e.Title.Contains(s) || e.EventType.Type.Contains(s)).ToList();
+        }
+
+        private List<Event> GetLocationSearch(string s)
+        {
+            return db.Events.Where(e => e.State.Contains(s) || e.City.Contains(s)).ToList();
         }
 
         public ActionResult About()
