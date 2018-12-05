@@ -20,7 +20,7 @@ namespace EventApplication.Models
 
         public virtual int EventId { get; set; }
 
-        public virtual Event @event { get; set; }
+        public virtual Event events { get; set; }
 
         public virtual string status { get; set; }
 

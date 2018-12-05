@@ -53,6 +53,14 @@ namespace EventApplication.Models
                             OrganizationName = "GamestoreB", OrganizationContactInfo = "bs",
                             MaxTickets = 8, AvailableTickets = 3
                           },
+                new Event { Title = "Last Minute Deal Test", EventType = eventTypes.Single(e => e.Type == "Tabletop RPG Sessions"),
+                            Description = "Test for last minute deals",
+                            StartDate = DateTime.Parse("12/05/2018 5:00:00 PM"),
+                            EndDate = DateTime.Parse("12/05/2018 9:30:00 PM"),
+                            City = "Parma", State = "Ohio",
+                            OrganizationName = "NA", OrganizationContactInfo = "",
+                            MaxTickets = 10, AvailableTickets = 10
+                          },
 
             }.ForEach(e => context.Events.Add(e));
 

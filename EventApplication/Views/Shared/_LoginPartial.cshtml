@@ -5,11 +5,11 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="header-right">
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
-        <li><!-- add button for "Find Event" -->Find Event (temp)</li>
+        <li>@Html.ActionLink("Find an Event", "FindAnEvent", "Home")</li>
         <li>@Html.ActionLink("Organize an Event", "Create", "Event")</li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
@@ -17,7 +17,7 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="header-right">
         <li>@Html.ActionLink("Find an Event", "FindAnEvent", "Home")</li>
         <li>@Html.ActionLink("Organize an Event", "Create", "Event")</li>
         <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>

@@ -55,7 +55,8 @@ namespace EventApplication.Models
                 {
                     CartId = OrderCartId,
                     EventId = id,
-                    @event = @event,
+                    events = @event,
+                    status = "Processed",
                     NumberOfTickets = ticketQuantity,
                     DateOrdered = DateTime.Now
                 };

@@ -28,11 +28,9 @@ namespace EventApplication.Controllers
         private List<Event> GetLastMinuteDeals()
         {
             DateTime now = System.DateTime.Now;
-            DateTime tomorrow = System.DateTime.Now.AddDays(1);
             DateTime last = System.DateTime.Now.AddDays(2);
-            List<Event> events = db.Events.Where(a => a.StartDate == now ||
-                                                      a.StartDate == tomorrow ||
-                                                      a.StartDate == last).ToList();
+            List<Event> events = db.Events.Where(a => (a.StartDate > now) &&
+                                                      (a.StartDate < last)).ToList();
             return events;
         }
 

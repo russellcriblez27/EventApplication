@@ -8,19 +8,19 @@
         @using (Ajax.BeginForm("_SearchEventsResults", "Home",
             new AjaxOptions
             {
-                InsertionMode = InsertionMode.Replace,
                 HttpMethod = "GET",
                 UpdateTargetId = "EventSearch",
                 LoadingElementId = "ajax-loader",
-                OnFailure = "searchFailed"
+                OnFailure = "searchFailed",
+                InsertionMode = InsertionMode.Replace
             }
             )
         )
         {
-            <div class="form-inline">
+            <div class="form-inline text-center">
                 <input type="text" name="EventOrType" placeholder="Event or Event Type" />
                 <input type="text" name="Location" placeholder="Location, City, or State" />
-                <input type="submit" value="search" />
+                <input type="submit" value="search" class="btn btn-primary" />
                 <img id="ajax-loader" src="@Url.Content("~/Images/ajax-loader.gif")" style="display:none" />
             </div>
         }

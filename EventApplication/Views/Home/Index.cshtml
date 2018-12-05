@@ -8,11 +8,11 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" id="find-event">
         <h2>Find an Event</h2>
-        @Html.Partial("~/Views/Home/_SearchEvents.cshtml")
+        @Html.Action("_SearchEvents", "Home")
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" id="last-minute-deals">
         <div id="LastMinuteDeals">
             @Ajax.ActionLink("Click to see Last Minute Deals",
                 "LastMinuteDeals",

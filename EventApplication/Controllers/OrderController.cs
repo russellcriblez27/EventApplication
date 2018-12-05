@@ -11,7 +11,7 @@ namespace EventApplication.Controllers
 {
     public class OrderController : Controller
     {
-       
+
         private EventDb db = new EventDb();
 
         // GET: Order
@@ -26,21 +26,19 @@ namespace EventApplication.Controllers
             return View(vm);
         }
 
-        public ActionResult Register(int? id)
+        public ActionResult Register(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Event @event = db.Events.Find(id);
             if (@event == null)
             {
                 return HttpNotFound();
             }
 
+            OrderSummaryViewModel vm = new OrderSummaryViewModel();
 
+            vm.EventId = id;
 
-            return View(@event);
+            return View(vm);
         }
 
         public ActionResult OrderSummary()
@@ -49,11 +47,14 @@ namespace EventApplication.Controllers
             return View();
         }
 
-        public ActionResult AddOrder(int id, int quantity)
+        [HttpPost]
+        public ActionResult AddOrder(OrderSummaryViewModel vm)
         {
             OrderCart order = OrderCart.GetCart(this.HttpContext);
 
-            order.AddToCart(id, quantity);
+            int q = vm.SelectedOrderTicketQuantity;
+
+            order.AddToCart(vm.EventId, q);
 
             return Redirect("Index");
         }

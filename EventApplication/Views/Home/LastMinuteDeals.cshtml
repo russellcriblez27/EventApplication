@@ -4,7 +4,7 @@
     ViewBag.Title = "LastMinuteDeals";
 }
 
-<h3>LastMinuteDeals</h3>
+<h3>Last Minute Deals</h3>
 
 <table class="table">
     <tr>
@@ -29,7 +29,7 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate.ToShortDateString())
+                @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.City)

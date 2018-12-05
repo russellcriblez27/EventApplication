@@ -1,4 +1,4 @@
-﻿@model EventApplication.Models.Event
+﻿@model EventApplication.Models.ViewModels.OrderSummaryViewModel
 @using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Register";
@@ -6,41 +6,62 @@
 
 <h2>Register</h2>
 
-<div>
-    <p>Sale ends on @Html.DisplayTextFor(model => model.StartDate)</p>
-    <div class="row">
-        <div class="col-md-2">
-            @Html.DisplayTextFor(model => model.Title)<br />
-            FREE
-        </div>
-        <div class="col-md-2">
-            Number of Tickets<br />
-            <select name="ticketQuantity">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
-        </div>
-    </div>
-    <div>
-        @if (Request.IsAuthenticated)
-        {
-            <p class="button">
-                @Html.ActionLink("Checkout", "AddOrder",
-                             "Order",
-                             new { id = Model.EventId, quantity = ticketQuantity. },
-                             "")
-            </p>
-        }
-        else
-        {
+@using (Html.BeginForm("Order", "AddOrder", FormMethod.Post))
+{
 
-        }
+    <div>
+        <p>Sale ends on @Html.DisplayTextFor(model => model.@event.StartDate)</p>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.DisplayTextFor(model => model.@event.Title)<br />
+                FREE
+            </div>
+            <div class="col-md-2" id="tickets">
+                Number of Tickets<br />
+
+                @{
+                    var selectList = new SelectList(
+                        new List<SelectListItem>
+                        {
+                                 new SelectListItem {Text = "1", Value = "1"},
+                                 new SelectListItem {Text = "2", Value = "2"},
+                                 new SelectListItem {Text = "3", Value = "3"},
+                                 new SelectListItem {Text = "4", Value = "4"},
+                                 new SelectListItem {Text = "5", Value = "5"},
+                                 new SelectListItem {Text = "6", Value = "6"},
+                                 new SelectListItem {Text = "7", Value = "7"},
+                                 new SelectListItem {Text = "8", Value = "8"},
+                                 new SelectListItem {Text = "9", Value = "9"},
+                                 new SelectListItem {Text = "10", Value = "10"},
+                        }, "Value", "Text", Model.SelectedOrderTicketQuantity);
+                }
+
+                @Html.DropDownListFor(m => m.SelectedOrderTicketQuantity, selectList, "", new { @class = "css-class" })
+
+            </div>
+        </div>
+        <div>
+            @if (Request.IsAuthenticated)
+            {
+                <p class="button">
+                    @Html.ActionLink("Checkout", "AddOrder",
+                      "Order",
+                      new { id = Model.EventId, quantity = selectList.SelectedValue },
+                      new { id = "addOrder" })
+                </p>
+                <p>
+                    <input id="Submit1" type="submit" value="Checkout Submit" />
+                </p>
+            }
+            else
+            {
+
+            }
+        </div>
     </div>
-</div>
+}
+@section Scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+}
