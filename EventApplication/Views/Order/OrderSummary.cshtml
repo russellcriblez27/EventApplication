@@ -1,0 +1,20 @@
+﻿@model EventApplication.Models.Order
+@{
+    ViewBag.Title = "OrderSummary";
+}
+
+<h2>OrderSummary</h2>
+
+<ul class="order-summary">
+    <li>
+        <b>@Html.DisplayNameFor(model => model.OrderNumber) :</b> @Html.DisplayFor(model => model.OrderNumber)
+    </li>
+    <li>
+        <b>@Html.DisplayNameFor(model => model.Events.Title) :</b> @Html.DisplayFor(model => model.Events.Title)
+    </li>
+    <li>
+        <b>@Html.DisplayNameFor(model => model.NumberOfTickets) :</b> @Html.DisplayFor(model => model.NumberOfTickets)
+    </li>
+</ul>
+
+@Html.ActionLink("Go to My Tickets", "Index", "Order", null ,  htmlAttributes: new { @class = "btn btn-primary" })

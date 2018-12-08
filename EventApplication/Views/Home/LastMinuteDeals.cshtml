@@ -26,7 +26,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.ActionLink(item.Title, "Details", "Event", new { id = item.EventId }, new { @class = "btn btn-grey" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)

@@ -9,6 +9,7 @@ using EventApplication.Models.ViewModels;
 
 namespace EventApplication.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
 
@@ -36,15 +37,17 @@ namespace EventApplication.Controllers
 
             OrderSummaryViewModel vm = new OrderSummaryViewModel();
 
+            vm.@event = db.Events.Find(id);
             vm.EventId = id;
 
             return View(vm);
         }
 
-        public ActionResult OrderSummary()
+        public ActionResult OrderSummary(int orderNumber)
         {
-
-            return View();
+            OrderCart order = OrderCart.GetCart(this.HttpContext);
+            Order o = order.GetOrder(orderNumber);
+            return View(o);
         }
 
         [HttpPost]
@@ -54,17 +57,32 @@ namespace EventApplication.Controllers
 
             int q = vm.SelectedOrderTicketQuantity;
 
-            order.AddToCart(vm.EventId, q);
-
+            if (q > 0)
+            {
+                //adds to cart and gets order number
+                int oNumber = order.AddToCart(vm.EventId, q);
+                if (oNumber > 0)
+                {
+                    return RedirectToAction("OrderSummary", new { orderNumber = oNumber });
+                }
+            }
             return Redirect("Index");
         }
 
+        [HttpPost]
         public ActionResult RemoveOrder(int id)
         {
+            OrderCart order = OrderCart.GetCart(this.HttpContext);
+            string eventTitle = db.Orders.SingleOrDefault(o => o.OrderId == id).Events.Title;
+            order.RemoveFromCart(id);
 
+            OrderCartRemoveViewModel vm = new OrderCartRemoveViewModel()
+            {
+                DeleteId = id,
+                Message = "Your order for " + eventTitle + " has been cancelled."
+            };
 
-            
-            return null;
+            return Json(vm);
         }
     }
 }

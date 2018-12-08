@@ -1,12 +1,15 @@
 ﻿@model EventApplication.Models.ViewModels.OrderCartViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Ticket Orders";
 }
 
-<h2>Index</h2>
+<h2>Ticket Orders</h2>
 
-<table class="table">
+<br />
+<div id="update-message"></div>
+
+<table class="orders table">
     <tr>
         <th>
             Title
@@ -25,9 +28,9 @@
 
     @foreach (var item in Model.OrderItems)
     {
-        <tr>
+        <tr id="order-@item.OrderId" class="order-rows">
             <td>
-                @item.events.Title
+                @item.Events.Title
             </td>
             <td>
                 @item.DateOrdered
@@ -35,12 +38,26 @@
             <td>
                 @item.NumberOfTickets
             </td>
-            <td>
-                @item.status
+            <td id="status-@item.OrderId">
+                @item.Status
             </td>
-            <td></td>
-            
+            <td>
+                @if (item.Status != "Cancelled")
+                {
+                <div id="remove-@item.OrderId"><a href="#" class="btn btn-red" data-id="@item.OrderId" >Remove</a></div>
+                }
+
+            </td>
+
         </tr>
     }
 
 </table>
+
+@Html.ActionLink("Back to Browse", "Index", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/Apps/EventScript.js"></script>
+}

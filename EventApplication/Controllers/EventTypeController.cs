@@ -10,6 +10,7 @@ using EventApplication.Models;
 
 namespace EventApplication.Controllers
 {
+    [Authorize]
     public class EventTypeController : Controller
     {
         private EventDb db = new EventDb();

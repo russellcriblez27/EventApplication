@@ -7,10 +7,10 @@
 <h2>Organize an Event</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "signupform" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Event</h4>
         <hr />
@@ -22,15 +22,14 @@
                 @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
             </div>
             <div class="col-md-2">
-                <!-- make it a button -->
-                @Html.ActionLink("Create a new Event Type", "Create", "EventType", htmlAttributes: new { @class = "btn btn-primary"})
+                @Html.ActionLink("Create a new Event Type", "Create", "EventType", htmlAttributes: new { @class = "btn btn-primary" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" }  })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -47,7 +46,7 @@
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-3">
                 @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", placeholder = "e.g. 12/24/2020 9:30:00" } })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger", id="StartDateError" })
             </div>
         </div>
 
@@ -109,7 +108,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-3">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" id="btnSubmit" />
             </div>
         </div>
     </div>
@@ -121,4 +120,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
 }

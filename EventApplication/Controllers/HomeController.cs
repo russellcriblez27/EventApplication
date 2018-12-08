@@ -47,21 +47,23 @@ namespace EventApplication.Controllers
         public ActionResult _SearchEventsResults(string EventOrType, string Location)
         {
 
-            if (EventOrType.Length > 2)
+            if (EventOrType.Length > 0)
             {
                 //search by event or event type
                 var getEvents = GetEventSearch(EventOrType);
-                return PartialView(getEvents);
+                if (getEvents.Count > 0) { return PartialView(getEvents); }
+                else return PartialView("_NoResults");
             }
-            else if (Location.Length > 2)
+            else if (Location.Length > 0)
             {
                 //search by location
                 var getEvents = GetLocationSearch(Location);
-                return PartialView(getEvents);
-
+                if (getEvents.Count > 0) { return PartialView(getEvents); }
+                else return PartialView("_NoResults");
             }
-            else return null;
+            return PartialView("_NoResults");
         }
+
 
         private List<Event> GetEventSearch(string s)
         {

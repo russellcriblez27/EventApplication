@@ -35,11 +35,23 @@ table.top-header {
     width: 100%;
     height:50px;
 }
+table.top-header tr{
+    background-color: midnightblue;
+}
 
-ul.header-left li {
+ul.header-left {
     float: left;
 }
-ul.header-right li {
+ul.header-left, ul.header-right {
+    vertical-align:middle;
+    margin-top : 10px;
+    margin-bottom:10px;
+}
+
+ul.header-left li, ul.header-right li {
+    float: left;
+}
+ul.header-right-div, td.header-right {
     float: right;
 }
 ul.header-right {
@@ -76,7 +88,7 @@ footer {
     color:midnightblue;
 }
 
-.btn-primary {
+.btn-primary, a.RemoveLink {
     background-image: -webkit-linear-gradient(top, #42cbf4 0%, #42cbf4 100%);
     background-image: -o-linear-gradient(top, #42cbf4 0%, #42cbf4 100%);
     background-image: -webkit-gradient(linear, left top, left bottom, from(#42cbf4), to(#42cbf4));
@@ -86,6 +98,35 @@ footer {
     background-repeat: repeat-x;
     border-color: #42cbf4;
 }
+
+.btn-grey {
+    background-image: -webkit-linear-gradient(top, #5b5b5b 0%, #5b5b5b 100%);
+    background-image: -o-linear-gradient(top, #5b5b5b 0%, #5b5b5b 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5b5b5b), to(#5b5b5b));
+    background-image: linear-gradient(to bottom, #5b5b5b 0%, #5b5b5b 100%);
+    filter: progid:dximagetransform.microsoft.gradient(startcolorstr='#5b5b5b', endcolorstr='#5b5b5b', gradienttype=0);
+    filter: progid:dximagetransform.microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #5b5b5b;
+    color: aliceblue;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.btn-red {
+    background-image: -webkit-linear-gradient(top, #ba2527 0%, #ba2527 100%);
+    background-image: -o-linear-gradient(top, #ba2527 0%, #ba2527 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ba2527), to(#ba2527));
+    background-image: linear-gradient(to bottom, #ba2527 0%, #ba2527 100%);
+    filter: progid:dximagetransform.microsoft.gradient(startcolorstr='#ba2527', endcolorstr='#ba2527', gradienttype=0);
+    filter: progid:dximagetransform.microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #ba2527;
+    color: aliceblue;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
 #find-event .panel-body {
     background-color: lightgrey;
 }
@@ -96,6 +137,17 @@ footer {
 #EventSearch h3{
     text-align: center;
     color: aliceblue;
+}
+#EventSearch table tr th{
+    background-color:dodgerblue;
+    color:aliceblue;
+}
+#EventSearch table tr td {
+    color: midnightblue;
+    background-color: lightgrey;
+}
+#EventSearch table tr td a:link, #EventSearch table tr td a:visited {
+    color: dodgerblue;
 }
 
 #LastMinuteDeals a {
@@ -123,4 +175,43 @@ h2.find-event {
 }
 .form-inline{
     align-items:center;
+}
+.intro-box {
+    color: midnightblue;
+    background-color:dodgerblue;
+    width:auto;
+}
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
+
+.register {
+    box-shadow: -5px -10px inset;
+    padding: 30px;
+    background-color : lightgrey;
+}
+.register div {
+    font-weight:700;
+}
+.order-summary li {
+    list-style: none;
+}
+table.orders, table.orders tr, table.orders tr th {
+    border-top: none;
+}
+
+tr.order-rows {
+    border: 1px solid;
+}
+
+table.orders tr.order-rows td {
+    vertical-align: middle;
+}
+.search-failed {
+    color: grey;
+    text-align: center;
+    font-weight: 800;
 }

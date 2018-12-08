@@ -12,17 +12,21 @@ namespace EventApplication.Models
         [Key]
         public virtual int OrderId { get; set; }
 
+        [Display(Name = "Number of Tickets")]
+        public virtual int OrderNumber { get; set; }
+
         public string CartId { get; set; } //Not unique
 
+        [Display(Name = "Number of Tickets")]
         public virtual int NumberOfTickets { get; set; }
 
         public virtual DateTime DateOrdered { get; set; }
 
         public virtual int EventId { get; set; }
 
-        public virtual Event events { get; set; }
+        public virtual Event Events { get; set; }
 
-        public virtual string status { get; set; }
+        public virtual string Status { get; set; }
 
     }
 }

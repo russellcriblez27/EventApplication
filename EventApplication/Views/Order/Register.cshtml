@@ -6,17 +6,18 @@
 
 <h2>Register</h2>
 
-@using (Html.BeginForm("Order", "AddOrder", FormMethod.Post))
+@using (Html.BeginForm("AddOrder", "Order", FormMethod.Post))
 {
-
+    @Html.HiddenFor(model => model.EventId)
+    @Html.HiddenFor(model => model.@event)
     <div>
         <p>Sale ends on @Html.DisplayTextFor(model => model.@event.StartDate)</p>
-        <div class="row">
-            <div class="col-md-2">
+        <div class="row register">
+            <div class="col-md-5">
                 @Html.DisplayTextFor(model => model.@event.Title)<br />
                 FREE
             </div>
-            <div class="col-md-2" id="tickets">
+            <div class="col-md-3" id="tickets">
                 Number of Tickets<br />
 
                 @{
@@ -40,22 +41,17 @@
 
             </div>
         </div>
+        <br />
         <div>
             @if (Request.IsAuthenticated)
             {
-                <p class="button">
-                    @Html.ActionLink("Checkout", "AddOrder",
-                      "Order",
-                      new { id = Model.EventId, quantity = selectList.SelectedValue },
-                      new { id = "addOrder" })
-                </p>
                 <p>
-                    <input id="Submit1" type="submit" value="Checkout Submit" />
+                    <input id="Submit1" type="submit" value="Checkout" class="btn btn-primary"/>
                 </p>
             }
             else
             {
-
+                @Html.ActionLink("Checkout", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
             }
         </div>
     </div>

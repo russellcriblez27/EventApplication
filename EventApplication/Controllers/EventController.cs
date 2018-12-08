@@ -15,6 +15,7 @@ namespace EventApplication.Controllers
         private EventDb db = new EventDb();
 
         // GET: Event
+        [Authorize]
         public ActionResult Index()
         {
             var events = db.Events.Include(e => e.EventType);
@@ -37,6 +38,7 @@ namespace EventApplication.Controllers
         }
 
         // GET: Event/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Type");
@@ -48,8 +50,15 @@ namespace EventApplication.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "EventId,EventTypeId,Title,Description,StartDate,EndDate,City,State,OrganizationName,OrganizationContactInfo,MaxTickets,AvailableTickets")] Event @event)
         {
+
+            if (@event.StartDate < DateTime.Now)
+            {
+                ModelState.AddModelError("StartDate", "Start Date can not be in the past.");
+            }
+
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
@@ -62,6 +71,7 @@ namespace EventApplication.Controllers
         }
 
         // GET: Event/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,9 +91,14 @@ namespace EventApplication.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EventId,EventTypeId,Title,Description,StartDate,EndDate,City,State,OrganizationName,OrganizationContactInfo,MaxTickets,AvailableTickets")] Event @event)
         {
+            if (@event.StartDate < DateTime.Now)
+            {
+                ModelState.AddModelError("StartDate", "Start Date can not be in the past.");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;
@@ -95,6 +110,7 @@ namespace EventApplication.Controllers
         }
 
         // GET: Event/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,6 +128,7 @@ namespace EventApplication.Controllers
         // POST: Event/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Event @event = db.Events.Find(id);
@@ -120,6 +137,7 @@ namespace EventApplication.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         protected override void Dispose(bool disposing)
         {
             if (disposing)

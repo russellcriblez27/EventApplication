@@ -42,43 +42,58 @@ namespace EventApplication.Models
             return db.Orders.Where(cart => cart.CartId == OrderCartId).ToList();
         }
         
-        public void AddToCart(int id, int ticketQuantity)
+        public int AddToCart(int id, int ticketQuantity)
         {
 
-            //CartItem does not exist in db. add to db
-            Order cartItem = db.Orders.SingleOrDefault(c => c.CartId == OrderCartId && c.EventId == id);
+            //add order to db
+            int orderNumber;
+            Event orderedEvent = db.Events.Find(id);
 
-            if (cartItem == null)
+            Event @event = db.Events.SingleOrDefault(a => a.EventId == id);
+            Random rnd = new Random();
+            orderNumber = rnd.Next(5910253, 90561206);
+            if (((@event.AvailableTickets - ticketQuantity) >= 0) && @event.StartDate > DateTime.Now)
             {
-                Event @event = db.Events.SingleOrDefault(a => a.EventId == id);
-                cartItem = new Order()
+                Order orderItem = new Order()
                 {
                     CartId = OrderCartId,
+                    OrderNumber = orderNumber,
                     EventId = id,
-                    events = @event,
-                    status = "Processed",
+                    Events = @event,
+                    Status = "Processed",
                     NumberOfTickets = ticketQuantity,
                     DateOrdered = DateTime.Now
                 };
-                db.Orders.Add(cartItem);
+                db.Orders.Add(orderItem);
+                //changes available quantity
+                orderedEvent.AvailableTickets = orderedEvent.AvailableTickets - ticketQuantity;
+                db.SaveChanges();
             }
             else
             {
-                //CartItem exists already in db. update count
-                cartItem.NumberOfTickets = cartItem.NumberOfTickets + ticketQuantity;
+                orderNumber = -1;
             }
-            db.SaveChanges();
+            return orderNumber;
         }
-        public int RemoveFromCart(int id)
+        public Order GetOrder(int oNumber)
+        {
+            Order thisOrder = db.Orders.SingleOrDefault(o => o.CartId == OrderCartId && o.OrderNumber == oNumber);
+            return thisOrder;
+        }
+
+        public void RemoveFromCart(int id)
         {
             Order cartItem = db.Orders.SingleOrDefault(cart => cart.OrderId == id);
-            int count = 0;
-            if (cartItem != null)
+            Event orderedEvent = db.Events.Find(id);
+            if (cartItem != null && cartItem.Status != "Cancelled")
             {
-                db.Orders.Remove(cartItem);
+                //change status to cancelled
+                cartItem.Status = "Cancelled";
+                //update available tickets for event
+                orderedEvent.AvailableTickets = orderedEvent.AvailableTickets + cartItem.NumberOfTickets;
+                //leave ticket value alone
                 db.SaveChanges();
             }
-            return count;
         }
     }
 }
