@@ -3,8 +3,7 @@
 }
 
 $(function () {
-    $(".RemoveLink").click(function () {
-        alert("link clicked");
+    $(".btn-red").click(function () {
         var id = $(this).attr("data-id");
         $.post("/Order/RemoveOrder", { "id": id }, function (data) {
             //Populate elements in my view with data from the controller

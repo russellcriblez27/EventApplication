@@ -53,7 +53,7 @@ namespace EventApplication.Controllers
             {
                 db.EventTypes.Add(eventType);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create", "Event");
             }
 
             return View(eventType);

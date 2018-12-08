@@ -63,7 +63,7 @@ namespace EventApplication.Controllers
             {
                 db.Events.Add(@event);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
 
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Type", @event.EventTypeId);
